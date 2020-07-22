@@ -1,0 +1,7 @@
+{
+  "name": "com.psxcode.play-swarm",
+  "version": "0.0.0",
+  "displayName": "PlaySwarm",
+  "description": "Dependency Injection system",
+  "type": "tool"
+}
