@@ -1,7 +1,7 @@
-import plugin from '@start/plugin'
 import { TGithubConfig } from '@auto/github'
 import { TSlackConfig } from '@auto/slack'
 import { TTelegramConfig } from '@auto/telegram'
+import plugin from '@start/plugin'
 
 export const publish = () => plugin('publish', ({ reporter, logMessage }) => async () => {
   const { auto } = await import('@auto/core')
