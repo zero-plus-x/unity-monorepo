@@ -32,8 +32,8 @@ const runTest = async (mode: 'edit' | 'play') => {
     )
 
     return stdout
-  } catch {
-    throw new Error('docker run command failed')
+  } catch ({ stderr }) {
+    throw new Error(stderr)
   }
 }
 

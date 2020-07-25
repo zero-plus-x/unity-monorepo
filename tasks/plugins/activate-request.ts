@@ -11,7 +11,9 @@ export const activateRequest = () => plugin('activate-request', () => async () =
   const { mkdir } = await import('pifs')
   const { default: execa } = await import('execa')
 
-  await mkdir(licenseDir)
+  try {
+    await mkdir(licenseDir)
+  } catch {}
 
   await execa(
     'docker',

@@ -18,6 +18,7 @@
     "@babel/preset-typescript": "^7.10.4",
     "@babel/register": "^7.10.5",
     "@nextools/eslint-config": "^0.4.0",
+    "@nextools/eslint-plugin": "^0.2.0",
     "@nextools/typescript-config": "^0.2.0",
     "@start/plugin": "^2.0.0",
     "@start/plugin-sequence": "^2.0.0",
