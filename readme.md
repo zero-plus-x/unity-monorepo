@@ -1,5 +1,7 @@
 # Monorepo for Unity packages
 
+![Actions status](https://github.com/zero-plus-x/unity-monorepo/workflows/Tests/badge.svg?branch=master)
+
 ## Usage
 
 * Create a repository based on this template
