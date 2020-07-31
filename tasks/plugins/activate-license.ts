@@ -1,26 +1,12 @@
 import plugin from '@start/plugin'
 
 export const activateLicense = () => plugin('activate-license', () => async () => {
-  const username = process.env.UNITY_USERNAME
-  const password = process.env.UNITY_PASSWORD
-  const activationDir = process.env.UNITY_LICENSE_DIR
-  const unityVersion = process.env.UNITY_VERSION
+  const { getUnityUsername, getUnityPassword, getUnityVersion, getUnityLicenseDir } = await import('../utils/unity-helpers')
 
-  if (typeof username !== 'string' || username.length === 0) {
-    throw new Error('Variable "UNITY_USERNAME" is not set')
-  }
-
-  if (typeof password !== 'string' || password.length === 0) {
-    throw new Error('Variable "UNITY_PASSWORD" is not set')
-  }
-
-  if (typeof activationDir !== 'string' || activationDir.length === 0) {
-    throw new Error('Variable "UNITY_LICENSE_DIR" is not set')
-  }
-
-  if (typeof unityVersion !== 'string' || unityVersion.length === 0) {
-    throw new Error('Variable "UNITY_VERSION" is not set')
-  }
+  const username = getUnityUsername()
+  const password = getUnityPassword()
+  const activationDir = getUnityLicenseDir()
+  const unityVersion = await getUnityVersion()
 
   const { default: execa } = await import('execa')
   const path = await import('path')

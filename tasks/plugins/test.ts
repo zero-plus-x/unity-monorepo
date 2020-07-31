@@ -1,48 +1,40 @@
 import plugin from '@start/plugin'
 
 const runTest = async (mode: 'edit' | 'play') => {
-  const { default: execa } = await import('execa')
-
-  const unityVersion = process.env.UNITY_VERSION
-  const licenseDir = process.env.UNITY_LICENSE_DIR
-
-  if (typeof unityVersion !== 'string' || unityVersion.length === 0) {
-    throw new Error('Variable "UNITY_VERSION" is not set')
-  }
-
-  if (typeof licenseDir !== 'string' || licenseDir.length === 0) {
-    throw new Error('Variable "UNITY_LICENSE_DIR" is not set')
-  }
-
   if (mode !== 'edit' && mode !== 'play') {
     throw new Error(`Test mode should be set to "edit" or "play". Got ${mode}.`)
   }
 
-  const { stdout } = await execa(
-    'docker',
-    [
-      'run',
-      '--rm',
-      '--name',
-      'unity-test',
-      '-e',
-      `UNITY_LICENSE_DIR=${licenseDir}`,
-      '-e',
-      `UNITY_VERSION=${unityVersion}`,
-      '-e',
-      `TEST_PLATFORM=${mode}mode`,
-      '-v',
-      `${process.cwd()}:/project`,
-      '-w',
-      '/project',
-      `gableroux/unity3d:${unityVersion}`,
-      '/bin/bash',
-      '-c',
-      'tasks/scripts/test.sh',
-    ]
-  )
+  const { default: execa } = await import('execa')
+  const { getUnityLicense, getUnityVersion } = await import('../utils/unity-helpers')
 
-  return stdout
+  try {
+    const { stdout } = await execa(
+      'docker',
+      [
+        'run',
+        '--rm',
+        '--name',
+        'unity-test',
+        '-e',
+        `UNITY_LICENSE=${await getUnityLicense()}`,
+        '-e',
+        `TEST_PLATFORM=${mode}mode`,
+        '-v',
+        `${process.cwd()}:/project`,
+        '-w',
+        '/project',
+        `gableroux/unity3d:${await getUnityVersion()}`,
+        '/bin/bash',
+        '-c',
+        'tasks/scripts/test.sh',
+      ]
+    )
+
+    return stdout
+  } catch {
+    throw new Error('docker run command failed')
+  }
 }
 
 type TReportAssembly = {

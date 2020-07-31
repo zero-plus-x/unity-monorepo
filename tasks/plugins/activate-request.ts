@@ -3,18 +3,11 @@ import plugin from '@start/plugin'
 export const activateRequest = () => plugin('activate-request', () => async () => {
   const { default: execa } = await import('execa')
   const { default: fs } = await import('pifs')
+  const { getUnityVersion, getUnityLicenseDir } = await import('../utils/unity-helpers')
   const path = await import('path')
 
-  const unityVersion = process.env.UNITY_VERSION
-  const licenseDir = process.env.UNITY_LICENSE_DIR
-
-  if (typeof unityVersion !== 'string' || unityVersion.length === 0) {
-    throw new Error('Variable "UNITY_VERSION" is not set')
-  }
-
-  if (typeof licenseDir !== 'string' || licenseDir.length === 0) {
-    throw new Error('Variable "UNITY_LICENSE_DIR" is not set')
-  }
+  const unityVersion = await getUnityVersion()
+  const licenseDir = getUnityLicenseDir()
 
   try {
     await fs.mkdir(licenseDir)
