@@ -76,3 +76,6 @@ yarn-error.log
 
 # activation files
 activation/
+
+# Publish dir
+Publish/
