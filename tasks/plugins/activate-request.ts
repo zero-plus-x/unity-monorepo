@@ -1,17 +1,17 @@
 import plugin from '@start/plugin'
 
 export const activateRequest = () => plugin('activate-request', () => async () => {
-  const { default: execa } = await import('execa')
-  const { default: fs } = await import('pifs')
   const { getUnityVersion, getUnityLicenseDir } = await import('../utils/unity-helpers')
-  const path = await import('path')
 
+  // Validate early
   const unityVersion = await getUnityVersion()
   const licenseDir = getUnityLicenseDir()
 
-  try {
-    await fs.mkdir(licenseDir)
-  } catch {}
+  const path = await import('path')
+  const { mkdir } = await import('pifs')
+  const { default: execa } = await import('execa')
+
+  await mkdir(licenseDir)
 
   await execa(
     'docker',

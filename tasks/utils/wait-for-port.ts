@@ -1,8 +1,12 @@
-import plugin from '@start/plugin'
-
 const sleep = (timeout: number) => new Promise((resolve) => setTimeout(resolve, timeout))
 
-export const waitForPort = (port: number, path = '', timeout = 5000) => plugin<any, any>('wait-for-port', ({ logMessage }) => async () => {
+export type TWaitForPortConfig = {
+  path?: string,
+  timeoutMs?: number,
+  logMessage?: (message: string) => void,
+}
+
+export const waitForPort = async (port: number, { path = '', timeoutMs = 5000, logMessage = () => {} }: TWaitForPortConfig = {}) => {
   const { default: fetch } = await import('node-fetch')
   const isResponding = async (url: string) => {
     try {
@@ -16,10 +20,10 @@ export const waitForPort = (port: number, path = '', timeout = 5000) => plugin<a
   }
 
   const url = `http://localhost:${port}/${path}`
-  const maxTries = Math.round(Math.max(timeout, 1000) / 500)
+  const maxTries = Math.round(Math.max(timeoutMs, 1000) / 500)
   let numTries = 0
 
   while (numTries++ < maxTries && !(await isResponding(url))) {
     await sleep(500)
   }
-})
+}

@@ -1,10 +1,10 @@
-import plugin from '@start/plugin'
+import type { THook } from '@auto/core'
 
-export const PORT = 4873
+const PORT = 4873
 
-export const runNpm = () => plugin<{}, any>('run-npm', () => async () => {
+export const runNpm: THook = async () => {
   const { default: execa } = await import('execa')
-  const configPath = require.resolve('../config/verdaccio.yml')
+  const { waitForPort } = await import('../utils/wait-for-port')
 
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   execa(
@@ -17,12 +17,14 @@ export const runNpm = () => plugin<{}, any>('run-npm', () => async () => {
       '-p',
       `${PORT}:${PORT}`,
       '-v',
-      `${configPath}:/verdaccio/conf/config.yaml`,
+      `${require.resolve('../config/verdaccio.yml')}:/verdaccio/conf/config.yaml`,
       'verdaccio/verdaccio',
     ],
     {
-      stdout: process.stdout,
+      // stdout: process.stdout,
       stderr: process.stderr,
     }
   )
-})
+
+  await waitForPort(PORT)
+}

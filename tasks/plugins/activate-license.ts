@@ -1,11 +1,17 @@
 import plugin from '@start/plugin'
 
 export const activateLicense = () => plugin('activate-license', () => async () => {
-  const { getUnityUsername, getUnityPassword, getUnityVersion, getUnityLicenseDir } = await import('../utils/unity-helpers')
+  const {
+    getUnityUsername,
+    getUnityPassword,
+    getUnityVersion,
+    getUnityLicenseDir,
+  } = await import('../utils/unity-helpers')
 
+  // Validate early
   const username = getUnityUsername()
   const password = getUnityPassword()
-  const activationDir = getUnityLicenseDir()
+  const licenseDir = getUnityLicenseDir()
   const unityVersion = await getUnityVersion()
 
   const { default: execa } = await import('execa')
@@ -23,11 +29,11 @@ export const activateLicense = () => plugin('activate-license', () => async () =
       '-e',
       `UNITY_PASSWORD=${password}`,
       '-e',
-      `UNITY_ACTIVATION_FILE=${path.join(activationDir, `Unity_v${unityVersion}.alf`)}`,
+      `UNITY_ACTIVATION_FILE=${path.join(licenseDir, `Unity_v${unityVersion}.alf`)}`,
       '-e',
-      `UNITY_LICENSE_FILE=${path.join(activationDir, `Unity_v${unityVersion}.ulf`)}`,
+      `UNITY_LICENSE_FILE=${path.join(licenseDir, `Unity_v${unityVersion}.ulf`)}`,
       '-v',
-      `${path.resolve(activationDir)}:/app/${activationDir}`,
+      `${path.resolve(licenseDir)}:/app/${licenseDir}`,
       'gableroux/unity3d-activator',
       'node',
       'index.js',

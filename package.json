@@ -21,11 +21,10 @@
     "@nextools/eslint-config": "^0.2.0",
     "@nextools/typescript-config": "^0.1.0",
     "@start/plugin": "^1.0.0",
-    "@start/plugin-copy": "^1.0.0",
-    "@start/plugin-find": "^1.0.0",
     "@start/plugin-sequence": "^1.0.0",
     "@start/reporter-verbose": "^1.0.2",
     "@types/node-fetch": "^2.5.7",
+    "@types/prompts": "^2.0.8",
     "@types/puppeteer-core": "^2.0.0",
     "@types/xml2js": "^0.4.5",
     "chalk": "^4.1.0",
@@ -33,8 +32,10 @@
     "eslint": "^7.5.0",
     "execa": "^4.0.3",
     "figures": "^3.2.0",
+    "globby": "^11.0.0",
     "node-fetch": "^2.6.0",
     "pifs": "^1.0.0",
+    "prompts": "^2.3.2",
     "puppeteer-core": "^5.2.1",
     "tsfn": "^1.1.2",
     "typeon": "^1.0.0",
@@ -50,8 +51,8 @@
   },
   "auto": {
     "npm": {
-      "publishSubDirectory": "build",
-      "access": "public"
+      "access": "public",
+      "registry": "https://package.openupm.com"
     },
     "prefixes": {
       "major": "💥",

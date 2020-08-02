@@ -1,30 +1,24 @@
 import plugin from '@start/plugin'
 
-export const testPublish = () => plugin('test-publish', ({ reporter, logMessage }) => async () => {
-  const { default: sequence } = await import('@start/plugin-sequence')
-  const { auto, publishPackages } = await import('@auto/core')
-  const { forEachRelease } = await import('./for-each-release')
-  const { preparePackage } = await import('./prepare-package')
-  const { runNpm, PORT } = await import('./run-npm')
-  const { waitForPort } = await import('./wait-for-port')
-  const { removeYarnCache } = await import('./remove-yarn-cache')
+export const testPublish = () => plugin('test-publish', ({ logMessage }) => async () => {
+  const { concurrentHooks } = await import('../utils/concurrent-hooks')
+  const { auto } = await import('@auto/core')
+  const { preparePackages } = await import('../hooks/prepare-packages')
+  const { runNpm } = await import('../hooks/run-npm')
+  const { publishPackages } = await import('../hooks/publish-packages')
 
   try {
     await auto({
       depsCommit: false,
       publishCommit: false,
-      prePublish: async (props) => {
-        const taskRunner = sequence(
-          forEachRelease(preparePackage),
-          removeYarnCache,
-          runNpm(),
-          waitForPort(PORT)
-        )
-
-        await taskRunner(reporter)(props)
-      },
+      prePublish: concurrentHooks(
+        preparePackages,
+        runNpm
+      ),
       publish: publishPackages({
         registry: 'http://localhost:4873',
+        onMessage: logMessage,
+        onError: console.error,
       }),
       push: false,
     })

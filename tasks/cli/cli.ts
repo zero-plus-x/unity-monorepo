@@ -1,7 +1,6 @@
-import path from 'path'
 import { StartPlugin } from '@start/plugin'
 import Reporter from '@start/reporter-verbose'
-import { getStartOptions } from '../utils/get-start-options'
+import { getStartTasksFile } from '../utils/get-start-tasks-file'
 
 const TASK_NAME_REGEXP = /^[a-z]/
 
@@ -12,8 +11,7 @@ type TTasks = {
 // eslint-disable-next-line @typescript-eslint/no-floating-promises
 ;(async () => {
   try {
-    const options = await getStartOptions()
-    const tasksFile = options && options.file ? path.resolve(options.file) : require.resolve('..')
+    const tasksFile = await getStartTasksFile()
     const tasks = await import(tasksFile) as TTasks
     const filteredTasks = Object.entries(tasks).reduce((acc, [key, value]) => {
       if (TASK_NAME_REGEXP.test(key)) {
