@@ -1,0 +1,11 @@
+{
+  "name": "com.psxcode.play-tween",
+  "version": "0.0.0",
+  "displayName": "PlayTween",
+  "description": "Tweening library",
+  "type": "library",
+  "dependencies": {
+    "com.psxcode.play-ease": "0.0.0",
+    "com.psxcode.play-single": "0.0.0"
+  }
+}

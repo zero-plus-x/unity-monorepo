@@ -1,0 +1,7 @@
+{
+  "name": "com.psxcode.play-single",
+  "version": "0.0.0",
+  "displayName": "PlaySingle",
+  "description": "Singleton library",
+  "type": "library"
+}
