@@ -2,8 +2,8 @@ import type { THook, TPackageRelease } from '@auto/core'
 import execa from 'execa'
 import prompts from 'prompts'
 import type { TReadonly } from 'tsfn'
-import { isFunction, isString } from 'tsfn'
-import { getPublishDir } from '../utils/get-publish-dir'
+import { isString } from 'tsfn'
+import { getPublishDir } from '../utils/publish-helpers'
 import { resolveNpmConfig } from '../utils/resolve-npm-config'
 import type { TNpmConfig } from '../utils/resolve-npm-config'
 
@@ -24,10 +24,6 @@ type TPublishPackage = Pick<TPackageRelease, 'name' | 'dir'>
 const isNpmAlreadyExistsError = (err: unknown) => isString(err) && err.includes('previously published versions')
 
 const publishPackage = async (packageRelease: TReadonly<TPublishPackage>, npmConfig: TReadonly<Required<TNpmConfig>>, logMessage: (message: string) => void, logError: (err: Error) => void): Promise<void> => {
-  const publishDir = getPublishDir(packageRelease.dir)
-
-  console.log(publishDir)
-
   const invokePublish = () =>
     execa('npm', [
       'publish',
@@ -35,7 +31,7 @@ const publishPackage = async (packageRelease: TReadonly<TPublishPackage>, npmCon
       npmConfig.registry,
       '--access',
       npmConfig.access,
-      publishDir,
+      getPublishDir(packageRelease.dir),
     ], {
       stdin: process.stdin,
       stdout: process.stdout,
@@ -63,13 +59,11 @@ const publishPackage = async (packageRelease: TReadonly<TPublishPackage>, npmCon
 
 export type TPublishPackageConfig = {
   registry?: string,
-  onMessage?: (message: string) => void,
-  onError?: (e: Error) => void,
 }
 
 export const publishPackages = (publishConfig: TPublishPackageConfig = {}): THook => {
-  const logMessage = isFunction(publishConfig.onMessage) ? publishConfig.onMessage : () => {}
-  const logError = isFunction(publishConfig.onError) ? publishConfig.onError : () => {}
+  const logMessage = console.log
+  const logError = console.error
 
   return async ({ packages, config }) => {
     for (const pkg of packages) {

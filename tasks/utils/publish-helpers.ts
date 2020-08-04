@@ -1,7 +1,16 @@
+import path from 'path'
+import type { TPackageRelease } from '@auto/core'
 import type { TGithubConfig } from '@auto/github'
 import type { TSlackConfig } from '@auto/slack'
 import type { TTelegramConfig } from '@auto/telegram'
+import type { TReadonly } from 'tsfn'
 import { isValidString } from './is-valid-string'
+
+export const getPublishDir = (packageDir: string) => {
+  const relativeDir = path.relative(path.resolve('Packages'), packageDir)
+
+  return path.resolve('Publish', relativeDir)
+}
 
 export type TAutoConfig = {
   shouldMakeGitTags: boolean,
@@ -12,7 +21,6 @@ export type TAutoConfig = {
 }
 
 export const getAutoConfig = async (): Promise<TAutoConfig> => {
-  const path = await import('path')
   const { start } = await import(path.resolve('package.json'))
   const auto = start?.auto ?? {}
 
@@ -122,4 +130,18 @@ export const getTelegramConfig = (): TTelegramConfig => {
     token,
     chatId,
   }
+}
+
+const getPackageNamePart = (packageFullName: string) => {
+  const parts = packageFullName.split('.')
+
+  return parts[parts.length - 1]
+}
+
+export const compileTagForOpenUpm = (pkg: TReadonly<TPackageRelease>) => {
+  return `${getPackageNamePart(pkg.name)}_${pkg.version}`
+}
+
+export const compileGithubReleaseName = (pkg: TReadonly<TPackageRelease>) => {
+  return `${getPackageNamePart(pkg.name)} v${pkg.version}`
 }

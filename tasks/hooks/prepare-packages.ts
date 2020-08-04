@@ -1,8 +1,10 @@
+import path from 'path'
 import type { THook } from '@auto/core'
+import globby from 'globby'
+import { mkdir, copyFile } from 'pifs'
+import { getPublishDir } from '../utils/publish-helpers'
 
 const makePusblishDir = async (packageDir: string): Promise<string> => {
-  const { mkdir } = await import('pifs')
-  const { getPublishDir } = await import('../utils/get-publish-dir')
   const publishDir = getPublishDir(packageDir)
 
   await mkdir(publishDir, { recursive: true })
@@ -11,8 +13,6 @@ const makePusblishDir = async (packageDir: string): Promise<string> => {
 }
 
 const createFileCopier = async (packageDir: string) => {
-  const path = await import('path')
-  const { mkdir, copyFile } = await import('pifs')
   const publishDir = await makePusblishDir(packageDir)
 
   return async (filePath: string) => {
@@ -26,7 +26,6 @@ const createFileCopier = async (packageDir: string) => {
 const EXCLUDE_FILE_GLOBS = ['!**/*.meta', '!**/Tests/**', '!changelog.md']
 
 const preparePackage = async (packageDir: string) => {
-  const { default: globby } = await import('globby')
   const paths = await globby([`${packageDir}/**`, ...EXCLUDE_FILE_GLOBS], { absolute: false })
   const copyFile = await createFileCopier(packageDir)
 

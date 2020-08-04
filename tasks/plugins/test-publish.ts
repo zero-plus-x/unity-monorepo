@@ -17,8 +17,6 @@ export const testPublish = () => plugin('test-publish', ({ logMessage }) => asyn
       ),
       publish: publishPackages({
         registry: 'http://localhost:4873',
-        onMessage: logMessage,
-        onError: console.error,
       }),
       push: false,
     })

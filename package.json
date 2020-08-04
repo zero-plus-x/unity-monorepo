@@ -12,7 +12,6 @@
     "@auto/core": "^0.1.7",
     "@auto/github": "^0.1.2",
     "@auto/slack": "^0.1.2",
-    "@auto/tag": "^0.1.1",
     "@auto/telegram": "^0.1.2",
     "@babel/core": "^7.10.5",
     "@babel/preset-env": "^7.10.4",
@@ -43,16 +42,11 @@
     "xml2js": "^0.4.23"
   },
   "start": {
-    "file": "tasks/",
-    "auto": {
-      "shouldMakeGitTags": true,
-      "shouldWriteChangelogFiles": true
-    }
+    "file": "tasks/"
   },
   "auto": {
     "npm": {
-      "access": "public",
-      "registry": "https://package.openupm.com"
+      "access": "public"
     },
     "prefixes": {
       "major": "💥",
@@ -61,12 +55,10 @@
       "publish": "📦",
       "dependencies": "♻️",
       "initial": "🐣",
-      "lint": "🚷",
       "test": "👾",
       "docs": "📝",
       "refactor": "🛠",
-      "wip": "🚧",
-      "screenshots": "📸"
+      "wip": "🚧"
     },
     "commit": {
       "major": "Breaking Change",
@@ -74,12 +66,10 @@
       "patch": "Bugfix",
       "initial": "Initial",
       "depepdencies": "Dependencies",
-      "lint": "Lint",
       "test": "Test",
       "docs": "Docs",
       "refactor": "Refactor",
-      "wip": "WIP",
-      "screenshots": "Snapshots / Screenshots"
+      "wip": "WIP"
     }
   },
   "eslintConfig": {

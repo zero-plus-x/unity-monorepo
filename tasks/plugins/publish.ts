@@ -2,29 +2,23 @@ import plugin from '@start/plugin'
 
 export const publish = () => plugin('publish', ({ logMessage }) => async () => {
   const { auto } = await import('@auto/core')
-  const { writePublishTags } = await import('@auto/tag')
-  const { makeGithubReleases } = await import('@auto/github')
   const { sendSlackMessage } = await import('@auto/slack')
   const { sendTelegramMessage } = await import('@auto/telegram')
   const { writeChangelogFiles } = await import('@auto/changelog')
-  const { concurrentHooks } = await import('../utils/concurrent-hooks')
+  const { createOpenUpmTags } = await import('../hooks/create-openupm-tags')
+  const { makeGithubReleases } = await import('../hooks/make-github-release')
   const { preparePackages } = await import('../hooks/prepare-packages')
+  const { concurrentHooks } = await import('../utils/concurrent-hooks')
   const { getAutoConfig, getSlackConfig, getGithubConfig, getTelegramConfig } = await import('../utils/publish-helpers')
-  const {
-    shouldWriteChangelogFiles,
-    shouldMakeGitHubReleases,
-    shouldSendSlackMessage,
-    shouldSendTelegramMessage,
-    shouldMakeGitTags,
-  } = await getAutoConfig()
+  const { shouldSendSlackMessage, shouldSendTelegramMessage } = await getAutoConfig()
 
   try {
     await auto({
-      prePublishCommit: shouldWriteChangelogFiles && writeChangelogFiles,
+      prePublishCommit: writeChangelogFiles,
       prePublish: preparePackages,
-      prePush: shouldMakeGitTags && writePublishTags,
+      prePush: createOpenUpmTags,
       postPush: concurrentHooks(
-        shouldMakeGitHubReleases && makeGithubReleases(getGithubConfig()),
+        makeGithubReleases(getGithubConfig()),
         shouldSendSlackMessage && sendSlackMessage(getSlackConfig()),
         shouldSendTelegramMessage && sendTelegramMessage(getTelegramConfig())
       ),

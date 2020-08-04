@@ -72,14 +72,6 @@
     node-fetch "^2.6.0"
     tsfn "^1.1.1"
 
-"@auto/tag@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@auto/tag/-/tag-0.1.1.tgz#864d220ac55ad45c5148b0631e07785889394bab"
-  integrity sha512-fcH2DOpTOiYuwP852W5FDpfoAFNo0igx0G1/96++fRuMr01d10pjlks3uOCeJkt82i4QyFgqwF6UDvAKtEqKqQ==
-  dependencies:
-    "@auto/core" "^0.1.6"
-    execa "^4.0.0"
-
 "@auto/telegram@^0.1.2":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@auto/telegram/-/telegram-0.1.2.tgz#adff7102cc8189b7de024bc71e62647a51db6ba0"
