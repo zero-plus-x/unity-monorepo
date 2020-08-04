@@ -1,0 +1,7 @@
+{
+  "name": "com.psxcode.play-ease",
+  "version": "0.0.0",
+  "displayName": "PlayEase",
+  "description": "Easing functions library",
+  "type": "library"
+}
