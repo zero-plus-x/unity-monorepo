@@ -1,5 +1,26 @@
 {
   "dependencies": {
+    "com.psxcode.play-ease": {
+      "version": "file:com.psxcode.play-ease",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.psxcode.play-single": {
+      "version": "file:com.psxcode.play-single",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
+    "com.psxcode.play-tween": {
+      "version": "file:com.psxcode.play-tween",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {
+        "com.psxcode.play-ease": "0.0.0",
+        "com.psxcode.play-single": "0.0.0"
+      }
+    },
     "com.unity.ext.nunit": {
       "version": "1.0.0",
       "depth": 1,

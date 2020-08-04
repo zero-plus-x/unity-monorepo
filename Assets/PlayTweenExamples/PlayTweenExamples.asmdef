@@ -1,0 +1,16 @@
+{
+    "name": "PlayTweenExamples",
+    "references": [
+        "GUID:ab65d74ff3fe1491f889b5bea71443c3",
+        "GUID:f85267019ba9244df8183b45ee624a2e"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
