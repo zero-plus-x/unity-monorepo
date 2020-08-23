@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.my-company.template-package": {
+      "version": "file:com.my-company.template-package",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.psxcode.play-ease": {
       "version": "file:com.psxcode.play-ease",
       "depth": 0,
@@ -62,12 +68,6 @@
       "dependencies": {
         "com.unity.modules.ui": "1.0.0"
       }
-    },
-    "com.your-company.template-package": {
-      "version": "file:com.my-company.template-package",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
     },
     "com.unity.modules.imgui": {
       "version": "1.0.0",
