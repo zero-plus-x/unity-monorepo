@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Packages/com.psxcode.play-swarm/Tests/Runtime/Fixtures/TestInjector.unity
+    guid: 950b9ca0a57ba4c208c4eb8286f8304f
+  - enabled: 0
+    path: Packages/com.psxcode.swarm/Tests/Runtime/Fixtures/TestScene.unity
+    guid: 08d060986322e44b28f1b44d020de5c3
   m_configObjects: {}

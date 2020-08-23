@@ -18,6 +18,12 @@
       "source": "embedded",
       "dependencies": {}
     },
+    "com.psxcode.play-swarm": {
+      "version": "file:com.psxcode.play-swarm",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.psxcode.play-tween": {
       "version": "file:com.psxcode.play-tween",
       "depth": 0,
