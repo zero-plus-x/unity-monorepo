@@ -33,7 +33,7 @@
     "execa": "^4.0.3",
     "figures": "^3.2.0",
     "globby": "^11.0.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^3.1.1",
     "pifs": "^2.0.0",
     "prompts": "^2.3.2",
     "puppeteer-core": "^5.2.1",
